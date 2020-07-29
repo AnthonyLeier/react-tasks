@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ImageBackground, StyleSheet, FlatList, TouchableOpacity, Plataform, Platform} from 'react-native';
+import {View, Text, ImageBackground, StyleSheet, FlatList, TouchableOpacity, Alert, Platform} from 'react-native';
 
 import todayImage from '../../assets/imgs/today.jpg';
 import commonStyles from '../commonStyles';
@@ -67,13 +67,33 @@ export default class TaskList extends Component {
 		this.setState({showAddTask: false});
 	};
 
+	addTask = newTask => {
+		const desc = `${newTask.desc}`;
+
+		if (!desc || !desc.trim()) {
+			Alert.alert('Dados inválidos', 'Descrição não informada');
+			return;
+		}
+
+		const tasks = [...this.state.tasks];
+
+		tasks.push({
+			id: Math.random(),
+			desc: newTask.desc,
+			estimateAt: newTask.date,
+			doneAt: null,
+		});
+
+		this.setState({tasks, showAddTask: false}, this.filterTasks);
+	};
+
 	render() {
 		const today = moment()
 			.locale('pt-br')
 			.format('ddd, D [de] MMMM');
 		return (
 			<View style={styles.container}>
-				<AddTask isVisible={this.state.showAddTask} onCancel={this.closeAddTask} />
+				<AddTask isVisible={this.state.showAddTask} onCancel={this.closeAddTask} onSave={this.addTask} />
 				<ImageBackground source={todayImage} style={styles.background}>
 					<View style={styles.iconBar}>
 						<TouchableOpacity onPress={this.toggleFilter}>
