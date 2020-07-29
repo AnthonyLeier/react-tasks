@@ -1,39 +1,32 @@
 import React, {Component} from 'react';
 import {View, Text, ImageBackground, StyleSheet, FlatList, TouchableOpacity, Alert, Platform} from 'react-native';
-
-import todayImage from '../../assets/imgs/today.jpg';
-import commonStyles from '../commonStyles';
-
-import Task from '../components/Task';
-import AddTask from './AddTask';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 
+import Task from '../components/Task';
+import AddTask from './AddTask';
+import todayImage from '../../assets/imgs/today.jpg';
+import commonStyles from '../commonStyles';
+
+const initialState = {
+	showAddTask: false,
+	showDoneTasks: true,
+	visibleTasks: [],
+	tasks: [],
+};
+
 export default class TaskList extends Component {
 	state = {
-		showAddTask: false,
-		showDoneTasks: true,
-		visibleTasks: [],
-		tasks: [
-			{
-				id: Math.random(),
-				desc: 'Comprar Livro de React Native',
-				estimateAt: new Date(),
-				doneAt: new Date(),
-			},
-			{
-				id: Math.random(),
-				desc: 'Ler Livro de React Native',
-				estimateAt: new Date(),
-				doneAt: null,
-			},
-		],
+		...initialState,
 	};
 
-	componentDidMount = () => {
-		this.filterTasks();
+	componentDidMount = async () => {
+		const stateString = await AsyncStorage.getItem('tasksState');
+		const state = JSON.parse(stateString) || initialState;
+
+		this.setState(state, this.filterTasks);
 	};
 
 	filterTasks = () => {
@@ -45,6 +38,8 @@ export default class TaskList extends Component {
 		}
 
 		this.setState({visibleTasks});
+
+		AsyncStorage.setItem('tasksState', JSON.stringify(this.state));
 	};
 
 	toggleFilter = () => {
