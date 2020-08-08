@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, StyleSheet, View, TextInput, TouchableOpacity, Platform, Alert} from 'react-native';
+import {ImageBackground, Text, StyleSheet, View, TouchableOpacity, Alert} from 'react-native';
 
+import AuthInput from '../components/AuthInput';
 import commonStyles from '../commonStyles';
 import backgroundImage from '../../assets/imgs/login.jpg';
 
@@ -28,20 +29,23 @@ export default class Auth extends Component {
 				<View style={styles.formContainer}>
 					<Text style={styles.subtitle}>{this.state.stageNew ? 'Crie a sua conta' : 'Informe seus dados'}</Text>
 					{this.state.stageNew ? (
-						<TextInput
+						<AuthInput
+							icon="user"
 							placeholder="Nome"
 							value={this.state.name}
 							style={styles.input}
 							onChangeText={name => this.setState({name})}
 						/>
 					) : null}
-					<TextInput
+					<AuthInput
+						icon="at"
 						placeholder="Email"
 						value={this.state.email}
 						style={styles.input}
 						onChangeText={email => this.setState({email})}
 					/>
-					<TextInput
+					<AuthInput
+						icon="lock"
 						placeholder="Senha"
 						value={this.state.password}
 						style={styles.input}
@@ -49,7 +53,8 @@ export default class Auth extends Component {
 						secureTextEntry={true}
 					/>
 					{this.state.stageNew ? (
-						<TextInput
+						<AuthInput
+							icon="asterisk"
 							placeholder="Confirmação de Senha"
 							value={this.state.confirmPassword}
 							style={styles.input}
@@ -99,13 +104,13 @@ const styles = StyleSheet.create({
 	input: {
 		marginTop: 10,
 		backgroundColor: 'white',
-		padding: Platform.OS === 'ios' ? 15 : 10,
 	},
 	button: {
 		backgroundColor: '#080',
 		marginTop: 10,
 		padding: 10,
 		alignItems: 'center',
+		borderRadius: 10,
 	},
 	buttonText: {
 		fontFamily: commonStyles.fontFamily,
