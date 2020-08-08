@@ -49,7 +49,7 @@ export default class Auth extends Component {
 				password: this.state.password,
 			});
 
-			axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`;
+			axios.defaults.headers.common['Authorization'] = `bearer ${resp.data.token}`;
 			this.props.navigation.navigate('Home');
 		} catch (e) {
 			showError(e);
