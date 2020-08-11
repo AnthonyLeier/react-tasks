@@ -23,7 +23,7 @@ export default class AuthOrApp extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<ActivityIndicator size="large" color="#080" />
+				<ActivityIndicator size="large" color="white" />
 			</View>
 		);
 	}

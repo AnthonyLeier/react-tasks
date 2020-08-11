@@ -20,7 +20,7 @@ const menuConfig = {
 		},
 		activeLabelStyle: {
 			fontWeight: 'bold',
-			color: '#080',
+			color: 'black',
 		},
 	},
 };
