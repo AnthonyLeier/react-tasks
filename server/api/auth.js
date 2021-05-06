@@ -1,4 +1,4 @@
-const {authSecret} = require('../.env');
+const authSecret = "SENHATESTE";
 const jwt = require('jwt-simple');
 const bcrypt = require('bcrypt-nodejs');
 
